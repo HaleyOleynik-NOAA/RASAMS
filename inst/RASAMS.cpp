@@ -1,5 +1,6 @@
 #include <RcppCommon.h>
 #include <Rcpp.h>
+using namespace Rcpp;
 
 class parameter{
 public:
