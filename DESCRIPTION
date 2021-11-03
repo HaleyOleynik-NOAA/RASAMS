@@ -12,7 +12,6 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
 Encoding: UTF-8
 LazyData: true
-Depends: R (>=4.0.0)
 Imports: Rcpp
 LinkingTo: Rcpp
 Roxygen: list(markdown = TRUE)
