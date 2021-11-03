@@ -17,6 +17,7 @@ public:
 RCPP_EXPOSED_CLASS(parameter)
 
     RCPP_MODULE(rasams) {
+      using namespace Rcpp;
     class_<parameter>("parameter")
       .constructor()
       .constructor<double>()
