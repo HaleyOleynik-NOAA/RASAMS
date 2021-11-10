@@ -30,6 +30,12 @@ struct beverton_holt:public recruitment_interface_base{
   beverton_holt(){this->id=recruitment_interface_base::id_g++;}
 };
 
+struct ricker:public recruitment_interface_base{
+  parameter h;
+  parameter r0;
+  ricker(){this->id=recruitment_interface_base::id_g++;}
+};
+
 RCPP_EXPOSED_CLASS(parameter)
 
     RCPP_MODULE(rasams) {
@@ -43,6 +49,10 @@ RCPP_EXPOSED_CLASS(parameter)
       .constructor()
       .field("r0",&beverton_holt::r0)
       .field("h",&beverton_holt::h);
+    class_<ricker >("ricker")
+      .constructor()
+      .field("r0",&ricker::r0)
+      .field("h",&ricker::h);
     }
 
 
