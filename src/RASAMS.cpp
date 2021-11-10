@@ -27,13 +27,35 @@ std::map<uint32_t,recruitment_interface_base* > recruitment_interface_base::mode
 struct beverton_holt:public recruitment_interface_base{
   parameter h;
   parameter r0;
-  beverton_holt(){this->id=recruitment_interface_base::id_g++;}
+  beverton_holt(){this->id=recruitment_interface_base::id_g++;
+    recruitment_interface_base::models[this->id]=this;
+    }
 };
 
 struct ricker:public recruitment_interface_base{
   parameter h;
   parameter r0;
-  ricker(){this->id=recruitment_interface_base::id_g++;}
+  ricker(){this->id=recruitment_interface_base::id_g++;
+    recruitment_interface_base::models[this->id]=this;
+    }
+};
+
+// selectivity interface 
+struct selectivity_interface_base{
+  static std::map<uint32_t,selectivity_interface_base* > models;
+  static uint32_t id_g;
+  uint32_t id;
+};
+
+uint32_t selectivity_interface_base::id_g;
+std::map<uint32_t,selectivity_interface_base* > selectivity_interface_base::models;
+
+struct logistic_selectivity:public selectivity_interface_base{
+  parameter a50;
+  parameter slope;
+  logistic_selectivity(){this->id=selectivity_interface_base::id_g++;
+    selectivity_interface_base::models[this->id]=this;
+  }
 };
 
 RCPP_EXPOSED_CLASS(parameter)
@@ -53,6 +75,10 @@ RCPP_EXPOSED_CLASS(parameter)
       .constructor()
       .field("r0",&ricker::r0)
       .field("h",&ricker::h);
+    class_<logistic_selectivity >("logistic_selectivity")
+      .constructor()
+      .field("a50",&logistic_selectivity::a50)
+      .field("slope",&logistic_selectivity::slope);
     }
 
 
