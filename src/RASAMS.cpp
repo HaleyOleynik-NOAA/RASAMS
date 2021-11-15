@@ -69,8 +69,6 @@ struct double_logistic_selectivity:public recruitment_interface_base{
 };
 
 
-RCPP_EXPOSED_CLASS(parameter)
-
 // Survey interface 
 struct survey_interface_base{
   static std::map<uint32_t,survey_interface_base* > models;
