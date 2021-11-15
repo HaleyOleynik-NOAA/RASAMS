@@ -193,8 +193,6 @@ RCPP_EXPOSED_CLASS(parameter)
       .field("beta_asc",&double_logistic_selectivity::beta_asc)
       .field("alpha_desc",&double_logistic_selectivity::alpha_desc)
       .field("beta_desc",&double_logistic_selectivity::beta_desc);
-    }
-    
     class_<survey >("survey")
       .constructor()
       .field("q",&survey::q)
@@ -203,7 +201,6 @@ RCPP_EXPOSED_CLASS(parameter)
       .method("AddSelectivity", &survey::AddSelectivity)
       .method("SetIndexNllId", &survey::SetIndexNllId)
       .method("SetAgeCompNllId", &survey::SetAgeCompNllId);
-    
     class_<IndexData >("IndexData")
       .constructor()
       .field("data",&IndexData::data)
