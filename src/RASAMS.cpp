@@ -58,6 +58,19 @@ struct logistic_selectivity:public selectivity_interface_base{
   }
 };
 
+struct double_logistic_selectivity:public recruitment_interface_base{
+  parameter alpha_asc;
+  parameter beta_asc;
+  parameter alpha_desc;
+  parameter beta_desc;
+  double_logistic_selectivity(){this->id=recruitment_interface_base::id_g++;
+    recruitment_interface_base::models[this->id]=this;
+  }
+};
+
+
+RCPP_EXPOSED_CLASS(parameter)
+
 // Survey interface 
 struct survey_interface_base{
   static std::map<uint32_t,survey_interface_base* > models;
@@ -176,6 +189,13 @@ RCPP_EXPOSED_CLASS(parameter)
       .constructor()
       .field("a50",&logistic_selectivity::a50)
       .field("slope",&logistic_selectivity::slope);
+    class_<double_logistic_selectivity >("double_logistic_selectivity")
+      .constructor()
+      .field("alpha_asc",&double_logistic_selectivity::alpha_asc)
+      .field("beta_asc",&double_logistic_selectivity::beta_asc)
+      .field("alpha_desc",&double_logistic_selectivity::alpha_desc)
+      .field("beta_desc",&double_logistic_selectivity::beta_desc);
+    }
     
     class_<survey >("survey")
       .constructor()
