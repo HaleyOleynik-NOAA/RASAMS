@@ -164,6 +164,68 @@ struct IndexData:public IndexData_interface_base{
   
 };
 
+// Fleet interface
+struct fleet_interface_base{
+  static std::map<uint32_t, fleet_interface_base* > models;
+  static uint32_t id_g;
+  uint32_t id;
+};
+
+uint32_t fleet_interface_base::id_g;
+std::map<uint32_t,fleet_interface_base* > fleet_interface_base::models;
+
+struct fleet:public fleet_interface_base{
+  
+  fleet(){
+    this->id=fleet_interface_base::id_g++;
+    fleet_interface_base::models[this->id]=this;
+  }
+  
+  // Add index data
+  int observed_index_data;
+  
+  void AddIndexData(int id) {
+    this->observed_index_data=id; 
+  }
+  
+  //Set index nll
+  int IndexNllId = -999;
+  
+  void SetIndexNllId (int id) {
+    this->IndexNllId=id;
+  }
+  
+  
+  //Add age compoisiton data
+  int observed_agecomp_data;
+  
+  void AddAgeCompData(int id){
+    this->observed_agecomp_data=id;
+  }
+  
+  // Set age composition nll 
+  int AgeCompNllId = -999;
+  
+  void SetAgeCompNllId (int id) {
+    
+    this->AgeCompNllId = id;
+    
+  }
+  
+  //Add selectivity
+  int selectivity;
+  void AddSelectivity(int id){
+    this->selectivity=id;
+  }
+  
+  
+  
+  
+  
+};
+
+
+
 
 // RCPP module
 RCPP_EXPOSED_CLASS(parameter)
@@ -205,6 +267,13 @@ RCPP_EXPOSED_CLASS(parameter)
       .constructor()
       .field("data",&IndexData::data)
       .field("error",&IndexData::error);
+    class_<fleet >("fleet")
+      .constructor()
+      .method("AddIndexData", &fleet::AddIndexData)
+      .method("AddAgeCompData", &fleet::AddAgeCompData)
+      .method("AddSelectivity", &fleet::AddSelectivity)
+      .method("SetIndexNllId", &fleet::SetIndexNllId)
+      .method("SetAgeCompNllId", &fleet::SetAgeCompNllId);
     
   }
 
