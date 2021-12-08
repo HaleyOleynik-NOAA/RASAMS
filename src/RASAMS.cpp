@@ -250,8 +250,8 @@ RCPP_MODULE(rasams) {
     class_<vonBertalanffy_growth>
             .constructor()
             .field("Linf", vonBertalanffy_growth::Linf)
-            .field("K", empirical_growth::K)
-            .field("t0", empirical_growth::t0);
+            .field("K", vonBertalanffy_growth::K)
+            .field("t0", vonBertalanffy_growth::t0);
     class_<logistic_selectivity >("logistic_selectivity")
             .constructor()
             .field("a50", &logistic_selectivity::a50)
