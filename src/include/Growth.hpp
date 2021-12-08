@@ -110,4 +110,3 @@ public:
 }
 
 #endif /*growth_h */
-v
