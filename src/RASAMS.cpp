@@ -216,7 +216,12 @@ struct IndexData : public IndexData_interface_base {
 };
 
 struct population{
-    
+    uint32_t recruitment_id;
+    uint32_t growth_id;
+    uint32_t mortality_id;
+
+    Rcpp::NumericVector init_N_devs;
+
 };
 
 struct Model{
@@ -245,13 +250,13 @@ RCPP_MODULE(rasams) {
             .field("h", &ricker::h);
     class_<empirical_growth>
             .constructor()
-            .field("catch_growth", empirical_growth::catch_growth)
-            .field("survey_growth", empirical_growth::survey_growth);
+            .field("catch_growth", &empirical_growth::catch_growth)
+            .field("survey_growth", &empirical_growth::survey_growth);
     class_<vonBertalanffy_growth>
             .constructor()
-            .field("Linf", vonBertalanffy_growth::Linf)
-            .field("K", vonBertalanffy_growth::K)
-            .field("t0", vonBertalanffy_growth::t0);
+            .field("Linf", &vonBertalanffy_growth::Linf)
+            .field("K", &vonBertalanffy_growth::K)
+            .field("t0", &vonBertalanffy_growth::t0);
     class_<logistic_selectivity >("logistic_selectivity")
             .constructor()
             .field("a50", &logistic_selectivity::a50)
@@ -274,6 +279,13 @@ RCPP_MODULE(rasams) {
             .constructor()
             .field("data", &IndexData::data)
             .field("error", &IndexData::error);
+
+    class_<population >("population")
+            .constructor()
+            .field("recruitment_id", &population::recruitment_id)
+            .field("growth_id", &population::growth_id)
+            .field("mortality_id", &population::mortality_id)
+            .field("init_N_devs", &population::init_N_devs);
 
 }
 
