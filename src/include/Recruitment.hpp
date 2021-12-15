@@ -18,6 +18,7 @@ protected:  //when class inherits from recruitment, can see
     
 public:
     virtual T evaluate(const T& SB0, const T& SB)=0;
+
 };
 
 /**

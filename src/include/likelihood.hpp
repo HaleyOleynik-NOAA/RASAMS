@@ -39,9 +39,11 @@ public:
             T se = std::sqrt(se2) / std::sqrt(std::log(M_E));
             nll1 +=  std::log(se);
             // nll2 +=  std::pow((asams::log((observed / expected),2) / se) + 0.5 * se);
-            nll2 +=  std::pow(((asams::log(observed) - asams::log(expected)))/se)+ 0.5 * se;
+            nll2 -=  std::pow((asams::log(observed[i]) - asams::log(expected[i]),2)/(2.0*se*se);
+            nll2 += std::log(observed[i]);
+            nll2 -= log(2.*M_PI)/2.0;
         }
-        return nll1 + 0.5 * nll2;
+        return nll1 + nll2;
     }
     
 };
