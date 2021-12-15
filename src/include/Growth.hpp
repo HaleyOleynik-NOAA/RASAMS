@@ -104,7 +104,7 @@ public:
   virtual T evaluate(const T& age) {
     return m_Linf * (1 - asams::exp(-m_K * (age - m_t0)));
   }
-
+  
 };
 
 }
