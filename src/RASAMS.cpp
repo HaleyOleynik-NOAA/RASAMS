@@ -1,6 +1,6 @@
 #include <RcppCommon.h>
 #include <Rcpp.h>
-#include "../Catch_at_Age.hpp"
+#include "include/Catch_at_Age.hpp"
 
 //#include "../ad/asamasad.hpp"
 
@@ -280,19 +280,44 @@ struct Model
     void run()
     {
 
-   
-        typename std::map<uint32_t, population *>::iterator pit;
-        pit = population::model[population_id];
-        asams::Population<double> * pop = new asams::Population<double>();
 
-        if(pit != population::model.end()){
+        typename std::map<uint32_t, population *>::iterator pit;
+        pit = population::models[population_id];
+        asams::population<double> * pop = new asams::population<double>();
+
+        if(pit != population::models.end()){
                  typename std::map<uint32_t, recruitment_interface_base *>::iterator it;
 
         }
-       
-   
+
+
         asams::catch_at_age<double> caa;
+
+
+        typename std::map<uint32_t, survey *>::iterator sid;
+        sid = survey::models[survey_id];
+        asams::survey<double> * survey1 = new asams::survey<double>();
+
+        asams::fleet<fleet> fleet1;
+
+        asams::index_data<double> index1;
+        asams::agecomp_data<agecomp_data> agecomp1;
+
+        survey1::AddIndexData(index1);
+        survey1::AddAgeCompData(agecomp1);
+        survey::AddSelectivity();
+
+
     }
+};
+
+struct lognormal : public likelihood_interface_base {
+
+  lognormal()
+  {
+    this->id = lognormal::id_g++;
+    lognormal::models[this->id] = this;
+  }
 };
 
 // RCPP module
@@ -348,8 +373,7 @@ RCPP_MODULE(rasams)
         .field("init_N_devs", &population::init_N_devs);
     class_<lognormal>("lognormal")
         .constructor()
-        .field("id", &likelihood::id)
-        .field("cv_m", &likelihood::cv_m);
+        .field("id", &likelihood::id);
     class_<multinomial>("multinomial")
         .constructor()
         .field("id", &multinomial::id);
